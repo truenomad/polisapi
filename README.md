@@ -1,9 +1,3 @@
----
-editor_options: 
-  markdown: 
-    wrap: 72
----
-
 # polisapi
 
 ## Overview
@@ -26,7 +20,7 @@ Install the package directly using devtools.
 install.packages("devtools")
 
 # Install the POLIS API Downloader package from GitHub
-devtools::install_github("truenomad/POLISAPI")
+devtools::install_github("truenomad/polisapi")
 ```
 
 ## Access and Authentication
