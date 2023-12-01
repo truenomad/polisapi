@@ -1,0 +1,32 @@
+Package: polisapi
+Title: POLIS data downloader
+Version: 0.0.0.9000
+Authors@R: 
+  c(person(given = "Mohamed A.", 
+           family = "Yusuf",
+           role = c("aut", "cre"),
+           email = "moyusuf@who.int",
+           comment = c(
+           second_email = "mohamedayusuf87@gmail.com",
+           ORCID = "0000-0002-9339-4613")))
+Description:This R package makes it easy to download Polio data from the WHO 
+            POLIS database.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Suggests: 
+    RcppSimdJson,
+    dplyr,
+    epiCleanr,
+    glue,
+    here,
+    httr,
+    tidyselect,
+    testthat (>= 3.0.0),
+    httr2,
+    jsonlite,
+    mockery,
+    withr,
+    httpcode
+Config/testthat/edition: 3
