@@ -1,8 +1,4 @@
- [![R-CMD-check](https://github.com/truenomad/polisapi/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/truenomad/polisapi/actions/workflows/R-CMD-check.yaml)
- 
- [![CodeFactor](https://www.codefactor.io/repository/github/truenomad/polisapi/badge)](https://www.codefactor.io/repository/github/truenomad/polisapi)
- 
- [![codecov](https://codecov.io/gh/truenomad/polisapi/graph/badge.svg?token=69FGYK1HMY)](https://codecov.io/gh/truenomad/polisapi)
+ [![R-CMD-check](https://github.com/truenomad/polisapi/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/truenomad/polisapi/actions/workflows/R-CMD-check.yaml)  [![CodeFactor](https://www.codefactor.io/repository/github/truenomad/polisapi/badge)](https://www.codefactor.io/repository/github/truenomad/polisapi) [![codecov](https://codecov.io/gh/truenomad/polisapi/graph/badge.svg?token=69FGYK1HMY)](https://codecov.io/gh/truenomad/polisapi)
  
 # polisapi
 
