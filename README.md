@@ -1,3 +1,5 @@
+ [![R-CMD-check](https://github.com/truenomad/polisapi/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/truenomad/polisapi/actions/workflows/R-CMD-check.yaml)
+ 
 # polisapi
 
 ## Overview
@@ -32,7 +34,7 @@ facilitating easy access across R scripts and sessions.
 
 ``` r
 # Load the POLIS API Downloader package
-library(POLIS_API)
+library(polisapi)
 
 # Set your access token securely in the R environment
 usethis::edit_r_environ()
