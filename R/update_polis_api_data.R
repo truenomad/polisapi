@@ -85,7 +85,7 @@ update_polis_api_data <- function(min_date,
 
   # Combine new data with existing data
   if (nrow(new_data) > 0) {
-    full_data <- rbind(full_data, new_data)
+    full_data <- bind_rows(full_data, new_data)
   }
 
   # Log the session details to an Excel file
