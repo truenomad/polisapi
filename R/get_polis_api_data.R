@@ -65,12 +65,13 @@ get_polis_api_data <- function(min_date,
   }
 
   # set up region field
-  if (tolower(region) == "global") {
+  if (tolower(region) == "global"  || is.null(region)) {
     region_field <- NULL
+  } else {
+    region_field <- get_api_date_suffix(data_type)$region_field
+    # set up region field name
+    region_field <- if (data_type == "virus") "RegionName" else "WHORegion"
   }
-
-  # set up region field name
-  region_field <- if (data_type == "virus") "RegionName" else "WHORegion"
 
   # Construct the full API URL
   api_url <- construct_api_url(
