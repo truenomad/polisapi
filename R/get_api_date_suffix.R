@@ -34,6 +34,25 @@ get_api_date_suffix <- function(data_type) {
     sub_activ = "SubActivity", lqas = "Lqas"
   )
 
+  # Define date fields for each data type
+  # for initial data
+  date_fields_initial <- c(
+    cases = "CaseDate",
+    virus = "VirusDate",
+    population = "CreatedDate",
+    env = "CollectionDate",
+    geo = "CreatedDate",
+    geo_synonym = "UpdatedDate",
+    im = "PublishDate",
+    activity = "ActivityDateFrom",
+    lab_specimen_virus = "PublishDate",
+    lab_specimen = "LastUpdateDate",
+    sub_activ = "DateFrom",
+    lqas = "Start"
+  )
+
+  # Define date fields for each data type
+ # for updated data
   date_fields <- c(
     cases = "LastUpdateDate",
     virus = "UpdatedDate", population = "UpdatedDate",
@@ -53,6 +72,7 @@ get_api_date_suffix <- function(data_type) {
   # Return endpoint suffix and date field
   list(
     endpoint_suffix = endpoint_suffixes[[data_type]],
+    date_fields_initial = date_fields_initial[[data_type]],
     date_field = date_fields[[data_type]]
   )
 }

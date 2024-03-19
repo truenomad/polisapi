@@ -26,14 +26,15 @@
 #'                  (Human Specimen Viruses). Default is 'cases'.
 #' @param region Region code for data filtering.
 #'               Represents the WHO region from which to retrieve the data.
-#'               Default is 'AFRO' (African Region).
+#'               Possible values are AFRO; AMRO; EMRO; EURO; SEARO; WPRO Use
+#'               'Global' to retrieve global data. Default is 'AFRO'.
 #' @param select_vars Vector of variables to select from the API response.
 #'                    If NULL (default), all variables are selected.
 #' @param polis_api_key API key for authentication.
 #'                        Default is retrieved from the environment variable
 #'                        'POLIS_API_KEY'. An explicit API key can be provided
 #'                        if required.
-#'
+#' @param updated_dates Logical indicating whether to use the 'LastUpdateDate'
 #' @return A data frame containing the requested data aggregated from all pages
 #'         of the API response. Each row represents a record, and columns
 #'         correspond to the variables in the dataset.
@@ -49,13 +50,24 @@ get_polis_api_data <- function(min_date,
                                data_type = "cases",
                                region = "AFRO",
                                select_vars = NULL,
+                               updated_dates = TRUE,
                                polis_api_key) {
+
   # API Endpoint and URL Construction
   api_endpoint <- "https://extranet.who.int/polis/api/v2/"
   endpoint_suffix <- get_api_date_suffix(data_type)$endpoint_suffix
 
   # set up the dates
-  date_field <- get_api_date_suffix(data_type)$date_field
+  if (updated_dates) {
+    date_field <- get_api_date_suffix(data_type)$date_field
+  } else {
+    date_field <- get_api_date_suffix(data_type)$date_fields_initial
+  }
+
+  # set up region field
+  if (tolower(region) == "global") {
+    region_field <- NULL
+  }
 
   # set up region field name
   region_field <- if (data_type == "virus") "RegionName" else "WHORegion"

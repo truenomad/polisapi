@@ -28,5 +28,7 @@ Suggests:
     jsonlite,
     mockery,
     withr,
-    httpcode
+    httpcode,
+    cli,
+    stringr
 Config/testthat/edition: 3

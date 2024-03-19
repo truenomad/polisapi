@@ -55,6 +55,7 @@ update_polis_api_data <- function(min_date,
                                   save_directly = FALSE,
                                   log_results = FALSE,
                                   polis_api_key = NULL) {
+
   # Construct file names for data and log
   data_file_name <- paste0(file_path, "/", data_type, "_polis_data.rds")
   log_file_name <- paste0(file_path, "/", "polis_data_update_log.xlsx")
