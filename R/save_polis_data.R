@@ -37,7 +37,16 @@ save_polis_data <- function(polis_data, polis_path,
   cli::cli_process_done(  )
 
   # Check existing datasets and keep only the 5 most recent
-  existing_files <- list.files(polis_path, full.names = TRUE)
+  existing_files <- list.files(
+    polis_path, pattern = "\\.rds$", full.names = TRUE)
+
+  # Check existing RDS datasets and keep only the 5 most recent
+  existing_files <- list.files(
+    polis_path, pattern = "\\.rds$", full.names = TRUE)
+
+  # Exclude files that contain 'polis_data_update_log' in the name
+  existing_files <- grep(
+    "polis_data_update_log", existing_files, value = TRUE, invert = TRUE)
 
   if (length(existing_files) > 5) {
     # Sort files by date, assuming the naming convention holds the date info

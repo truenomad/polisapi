@@ -5,13 +5,15 @@
 \title{Retrieve Data from POLIS API}
 \usage{
 get_polis_api_data(
-  min_date,
+  min_date = "2021-01-01",
   max_date = Sys.Date(),
   data_type = "cases",
   region = "AFRO",
   select_vars = NULL,
-  updated_dates = TRUE,
-  polis_api_key
+  updated_dates = FALSE,
+  polis_api_key,
+  log_results = FALSE,
+  log_file_path
 )
 }
 \arguments{
@@ -45,6 +47,10 @@ If NULL (default), all variables are selected.}
 Default is retrieved from the environment variable
 'POLIS_API_KEY'. An explicit API key can be provided
 if required.}
+
+\item{log_results}{Logical indicating whether to log the results of the API}
+
+\item{log_file_path}{Path to the directory where the log file will be saved}
 }
 \value{
 A data frame containing the requested data aggregated from all pages
