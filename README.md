@@ -53,9 +53,10 @@ The package offers two primary methods for POLIS API interaction:
 
 Retrieve data directly from the POLIS API for immediate analysis.
 
--   Suitable for one-off data extraction or personal data handling.
-
--   Offers detailed control over data retrieval parameters.
+- Suitable for complete data downloads (each time).
+- Good for complete downloads if using snaphots.
+- Offers detailed control over data retrieval parameters.
+- Has functionality to log file downloads.
 
 #### Usage Example
 
@@ -65,19 +66,20 @@ data <- get_polis_api_data(
   min_date = "2021-01-01",    
   max_date = "2021-01-31",
   data_type = "cases",
-  region = 'AFRO',
+  region = 'AFRO', 
   select_vars = NULL,
-  polis_api_key = my_token
+  polis_api_key = my_token,
+  log_results = TRUE,
+  log_file_path = "my_log_path/polis_log.rds"
 )
 ```
 
 ### 2. Data Updates: `update_polis_api_data`
 
 Use this for periodic data updates, minimizing redundant retrievals.
-
--   Checks for existing data and fetches new records.
-
--   Features built-in logging for update tracking.
+- Checks for existing data and fetches new records.
+- Good when you need to quickly update your polis data.
+- Features built-in logging for update tracking.
 
 #### Usage Example
 
@@ -100,24 +102,23 @@ update_polis_api_data(
 
 The POLIS API provides diverse datasets for download:
 
--   **Cases Data (`"cases"`):** Detailed polioviruses cases data.
--   **Virus Data (`"virus"`):** Virus are all data related with Viruses.
--   **Population Data (`"population"`):** Data on all references
-    population used in POLIS.
--   **Environmental Data (`"env"`):** Data on all environmental samples
-    collected.
--   **Geographical Data (`"geo"`):** All references places used in
-    POLIS.
--   **Geographical Synonym Data (`"geo_synonym"`):** Alternate location
-    names.
--   **Independent Monitoring Data (`"im"`):** Describes quality after
-    vaccination campaigns.
--   **Activity Data (`"activity"`):** Information all actions taken
-    against Poliovirus
--   **Sub-activities Data (`"sub_activ"`):** Details on specific
-    sub-activities taken against Poliovirus.
--   **Lot Quality Assurance Sampling Data (`"lqas"`):** Describes
-    quality of vaccination campaigns.
--   **Lab Specimen Data (Human & Viruses) (`"lab_specimen"` &
+- **Cases Data (`"cases"`):** Detailed polioviruses cases data.
+- **Virus Data (`"virus"`):** Virus are all data related with Viruses.
+- **Population Data (`"population"`):** Data on all references
+  population used in POLIS.
+- **Environmental Data (`"env"`):** Data on all environmental samples
+  collected.
+- **Geographical Data (`"geo"`):** All references places used in
+  POLIS.
+- **Geographical Synonym Data (`"geo_synonym"`):** Alternate location
+  names.
+- **Activity Data (`"activity"`):** Information all SIA actions taken.
+- **Sub-activities Data (`"sub_activ"`):** Details on specific SIA
+  sub-activities taken.
+- **Lot Quality Assurance Sampling Data (`"lqas"`):** Datasets on the
+  quality of vaccination campaigns.
+- **Independent Monitoring Data (`"im"`):** Datasets on the quality after
+  vaccination campaigns.
+- **Lab Specimen Data (Human & Viruses) (`"lab_specimen"` &
     `"lab_specimen_virus"`):** Details on human specimens and viruses;
     all specimens sent to laboratories to be investigated

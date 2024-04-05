@@ -24,7 +24,6 @@ testthat::test_that("get_polis_api_data returns correct data structure", {
 
   # Test the function
   result <- get_polis_api_data("2021-01-01",
-
                                "2021-01-31", "cases", "AFRO")
 
   # Assertions
