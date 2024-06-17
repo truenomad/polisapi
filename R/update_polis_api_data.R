@@ -81,7 +81,10 @@ update_polis_api_data <- function(min_date,
 
   # Retrieve data from the API
   new_data <- get_polis_api_data(
-    min_date, max_date, data_type, region, select_vars, polis_api_key
+    min_date = min_date, max_date = max_date,
+    data_type = data_type, region = region,
+    select_vars = select_vars, updated_dates = TRUE,
+    log_results = FALSE, polis_api_key = polis_api_key,
   )
 
   # Combine new data with existing data
@@ -94,7 +97,7 @@ update_polis_api_data <- function(min_date,
     session_end_date <- min(
       as.Date(max_date),
       max(as.Date(full_data[[date_field]],
-        format = "%Y-%m-%d"
+                  format = "%Y-%m-%d"
       ), na.rm = TRUE)
     )
 

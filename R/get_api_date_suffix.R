@@ -46,7 +46,7 @@ get_api_date_suffix <- function(data_type) {
     im = "PublishDate",
     activity = "ActivityDateFrom",
     lab_specimen_virus = "PublishDate",
-    lab_specimen = "LastUpdateDate",
+    lab_specimen = "CreatedDate",
     sub_activ = "DateFrom",
     lqas = "Start"
   )
