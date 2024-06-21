@@ -4,6 +4,6 @@ testthat::test_that("Test functionality of process_api_response", {
   response <- iterative_api_call(url)  |>
     process_api_response()
 
-  expect_type(response, 'list')
+  testthat::expect_type(response, 'list')
 })
 

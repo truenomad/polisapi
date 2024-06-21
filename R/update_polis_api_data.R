@@ -21,6 +21,7 @@
 #'                  (Human Specimen Viruses). Default is 'cases'.
 #' @param region Region code for data filtering, default is 'AFRO'.
 #'               This parameter filters the data by the specified WHO region.
+#' @param country_code ISO3 country code to filter the data. Default is NULL.
 #' @param select_vars Vector of variables to select, default is NULL (all vars).
 #'                    This parameter allows for the selection of specific
 #'                    variables from the API response.
@@ -50,6 +51,7 @@ update_polis_api_data <- function(min_date,
                                   max_date = Sys.Date(),
                                   data_type = "cases",
                                   region = "AFRO",
+                                  country_code = NULL,
                                   select_vars = NULL,
                                   file_path = NULL,
                                   save_directly = FALSE,
@@ -82,7 +84,7 @@ update_polis_api_data <- function(min_date,
   # Retrieve data from the API
   new_data <- get_polis_api_data(
     min_date = min_date, max_date = max_date,
-    data_type = data_type, region = region,
+    data_type = data_type, region = region, country_code = country_code,
     select_vars = select_vars, updated_dates = TRUE,
     log_results = FALSE, polis_api_key = polis_api_key,
   )

@@ -22,25 +22,20 @@
 #' # save_polis_data(polis_data, "./polis_datasets")
 #'
 #' @export
-save_polis_data <- function(polis_data, polis_path,
-                            filname, max_datasets = 5) {
-
+#' @export
+save_polis_data <- function(polis_data, polis_path, filname, max_datasets = 5) {
   cli::cli_process_start("Saving POLIS data into a compressed RDS file.")
 
-  # generate the file name based on the current date
+  # Generate the file name based on the current date
   suffix_name <- sprintf("_%s.rds", format(Sys.Date(), "%Y_%V"))
   full_path <- file.path(polis_path, paste0(filname, suffix_name))
 
-  # save polis list
+  # Save POLIS list
   saveRDS(polis_data, full_path, compress = "xz")
 
-  cli::cli_process_done(  )
+  cli::cli_process_done()
 
   # Check existing datasets and keep only the 5 most recent
-  existing_files <- list.files(
-    polis_path, pattern = "\\.rds$", full.names = TRUE)
-
-  # Check existing RDS datasets and keep only the 5 most recent
   existing_files <- list.files(
     polis_path, pattern = "\\.rds$", full.names = TRUE)
 
@@ -48,19 +43,23 @@ save_polis_data <- function(polis_data, polis_path,
   existing_files <- grep(
     "polis_data_update_log", existing_files, value = TRUE, invert = TRUE)
 
-  if (length(existing_files) > 5) {
+  # Keep only files starting with the specified filname
+  existing_files <- grep(
+    paste0("^", filname), basename(existing_files), value = TRUE)
+
+  if (length(existing_files) > max_datasets) {
     # Sort files by date, assuming the naming convention holds the date info
     file_dates <- sapply(existing_files, function(x) {
       as.Date(stringr::str_extract(x, "\\d{4}_\\d{2}"), "%Y_%V")
     })
 
-    oldest_files <- existing_files[order(
-      file_dates)][1:(length(existing_files)-5)]
+    oldest_files <- existing_files[order(file_dates)][1:(
+      length(existing_files) - max_datasets)]
 
     cli::cli_alert_success(
       "Removing {length(oldest_files)} old file(s) to keep top {max_datasets}.")
 
-    suppressMessages(file.remove(oldest_files))
+    suppressMessages(file.remove(file.path(polis_path, oldest_files)))
   }
-  cli::cli_process_done(  )
+  cli::cli_process_done()
 }

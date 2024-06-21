@@ -28,6 +28,7 @@
 #'               Represents the WHO region from which to retrieve the data.
 #'               Possible values are AFRO; AMRO; EMRO; EURO; SEARO; WPRO Use
 #'               'Global' to retrieve global data. Default is 'AFRO'.
+#' @param country_code ISO3 country code to filter the data. Default is NULL.
 #' @param select_vars Vector of variables to select from the API response.
 #'                    If NULL (default), all variables are selected.
 #' @param polis_api_key API key for authentication.
@@ -51,6 +52,7 @@ get_polis_api_data <- function(min_date = "2021-01-01",
                                max_date = Sys.Date(),
                                data_type = "cases",
                                region = "AFRO",
+                               country_code = NULL,
                                select_vars = NULL,
                                updated_dates = FALSE,
                                polis_api_key,
@@ -80,7 +82,7 @@ get_polis_api_data <- function(min_date = "2021-01-01",
   # Construct the full API URL
   api_url <- construct_api_url(
     api_endpoint, endpoint_suffix, min_date, max_date,
-    date_field, region_field, region, select_vars
+    date_field, country_code, region_field, region, select_vars
   )
 
   # all API iteratively

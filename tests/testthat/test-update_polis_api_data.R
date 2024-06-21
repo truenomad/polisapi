@@ -35,7 +35,7 @@ test_that("Main update_polis_api_data functionality", {
   suppressWarnings(
     result <- update_polis_api_data("2021-01-01", "2021-01-20")
   )
-  expect_equal(nrow(result), 20)
+  testthat::expect_equal(nrow(result), 20)
 
 })
 

@@ -9,6 +9,7 @@ update_polis_api_data(
   max_date = Sys.Date(),
   data_type = "cases",
   region = "AFRO",
+  country_code = NULL,
   select_vars = NULL,
   file_path = NULL,
   save_directly = FALSE,
@@ -34,6 +35,8 @@ Sampling), lab_specimen (Human Specimen), lab_specimen_virus
 
 \item{region}{Region code for data filtering, default is 'AFRO'.
 This parameter filters the data by the specified WHO region.}
+
+\item{country_code}{ISO3 country code to filter the data. Default is NULL.}
 
 \item{select_vars}{Vector of variables to select, default is NULL (all vars).
 This parameter allows for the selection of specific

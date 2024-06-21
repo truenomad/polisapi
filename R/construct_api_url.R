@@ -12,6 +12,7 @@
 #'        API resource.
 #' @param min_date The minimum date for the date range filter.
 #' @param max_date The maximum date for the date range filter.
+#' @param country_code ISO3 country code to filter the data. Default is NULL.
 #' @param date_field The field name in the API corresponding to the date.
 #' @param region_field The field name in the API corresponding to the region.
 #' @param region The specific region to filter the data. If NULL or empty,
@@ -24,12 +25,13 @@
 #' @examples
 #' construct_api_url(
 #'   "https://api.example.com/", "data", "2020-01-01", "2020-12-31",
-#'   "dateField", "regionField", "AFRO", c("field1", "field2")
+#'   "dateField", "NGA", "regionField", "AFRO", c("field1", "field2")
 #' )
 #' @export
 
 construct_api_url <- function(endpoint, suffix, min_date, max_date,
-                              date_field, region_field, region, select_vars) {
+                              date_field, country_code,
+                              region_field, region, select_vars) {
   # Base URL construction
   base_url <- paste0(endpoint, suffix)
 
@@ -46,8 +48,16 @@ construct_api_url <- function(endpoint, suffix, min_date, max_date,
     region_filter <- glue::glue(" and {region_field} eq '{region}'")
   }
 
+  # country code filter
+  country_code_filter <- ""
+  if (!is.null(country_code) && country_code != "" ) {
+    country_code_filter <- glue::glue(
+      " and CountryISO3Code eq '{country_code}'")
+  }
+
   # Combine date and region filters
-  filter_query <- paste(date_filter, region_filter, sep = "")
+  filter_query <- paste(date_filter, country_code_filter,
+                        region_filter, sep = "")
 
   # Select query for additional fields
   select_query <- ""

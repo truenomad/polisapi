@@ -5,7 +5,7 @@ testthat::test_that("Get the correct response and status code form API call", {
     head(1) |>
     httr2::resps_data(\(resp) httr2::resp_status(resp))
 
-  expect_equal(status_code, 200)
+  testthat::expect_equal(status_code, 200)
 })
 
 

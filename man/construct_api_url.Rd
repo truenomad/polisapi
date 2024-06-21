@@ -10,6 +10,7 @@ construct_api_url(
   min_date,
   max_date,
   date_field,
+  country_code,
   region_field,
   region,
   select_vars
@@ -26,6 +27,8 @@ API resource.}
 \item{max_date}{The maximum date for the date range filter.}
 
 \item{date_field}{The field name in the API corresponding to the date.}
+
+\item{country_code}{ISO3 country code to filter the data. Default is NULL.}
 
 \item{region_field}{The field name in the API corresponding to the region.}
 
@@ -49,6 +52,6 @@ encoding.
 \examples{
 construct_api_url(
   "https://api.example.com/", "data", "2020-01-01", "2020-12-31",
-  "dateField", "regionField", "AFRO", c("field1", "field2")
+  "dateField", "NGA", "regionField", "AFRO", c("field1", "field2")
 )
 }

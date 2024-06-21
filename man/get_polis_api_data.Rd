@@ -9,6 +9,7 @@ get_polis_api_data(
   max_date = Sys.Date(),
   data_type = "cases",
   region = "AFRO",
+  country_code = NULL,
   select_vars = NULL,
   updated_dates = FALSE,
   polis_api_key,
@@ -37,6 +38,8 @@ Sampling), lab_specimen (Human Specimen), lab_specimen_virus
 Represents the WHO region from which to retrieve the data.
 Possible values are AFRO; AMRO; EMRO; EURO; SEARO; WPRO Use
 'Global' to retrieve global data. Default is 'AFRO'.}
+
+\item{country_code}{ISO3 country code to filter the data. Default is NULL.}
 
 \item{select_vars}{Vector of variables to select from the API response.
 If NULL (default), all variables are selected.}

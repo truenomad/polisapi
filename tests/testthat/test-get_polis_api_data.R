@@ -27,9 +27,9 @@ testthat::test_that("get_polis_api_data returns correct data structure", {
                                "2021-01-31", "cases", "AFRO")
 
   # Assertions
-  expect_type(result, "list")
-  expect_true(all(c("id", "date", "cases") %in% names(result)))
-  expect_equal(nrow(result), 5)
+  testthat::expect_type(result, "list")
+  testthat::expect_true(all(c("id", "date", "cases") %in% names(result)))
+  testthat::expect_equal(nrow(result), 5)
 })
 
 
