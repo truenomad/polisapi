@@ -116,14 +116,14 @@ get_polis_api_data <- function(min_date = "2021-01-01",
     )
 
     if (file.exists(log_file_name)) {
-      log_data <- epiCleanr::import(log_file_name)
+      log_data <- readRDS(log_file_name)
       log_data <- rbind(log_data, log_message)
     } else {
       log_data <- log_message
     }
 
     # Save log file
-    epiCleanr::export(log_data, log_file_name)
+    saveRDS(log_data, log_file_name)
 
   }
 

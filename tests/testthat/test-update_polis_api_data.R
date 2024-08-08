@@ -1,7 +1,3 @@
-# library(testthat)
-# library(mockery)
-# library(glue)
-# library(epiCleanr)
 
 # Assuming necessary functions are defined or mocked here
 
@@ -23,11 +19,11 @@ test_that("Main update_polis_api_data functionality", {
   mockery::stub(
     update_polis_api_data, "file.exists", mock_file_exists)
   mockery::stub(
-    update_polis_api_data, "epiCleanr::import", mock_import_data)
+    update_polis_api_data, "readRDS", mock_import_data)
   mockery::stub(
     update_polis_api_data, "get_polis_api_data", mock_get_polis_api_data)
   mockery::stub(
-    update_polis_api_data, "epiCleanr::export", mock_export_data)
+    update_polis_api_data, "saveRDS", mock_export_data)
   mockery::stub(
     update_polis_api_data, "write_log_file_api", mock_write_log_file_api)
 
@@ -54,7 +50,7 @@ test_that("Main update_polis_api_data functionality", {
 #     mockery::stub(
 #       update_polis_api_data, "file.exists", function(path) FALSE)
 #     mockery::stub(
-#       update_polis_api_data, "epiCleanr::import", function(path) NULL)
+#       update_polis_api_data, "readRDS", function(path) NULL)
 #     mockery::stub(
 #       update_polis_api_data, "get_polis_api_data", function(...) {
 #         data.frame(
@@ -63,7 +59,7 @@ test_that("Main update_polis_api_data functionality", {
 #       })
 #     mockery::stub(
 #       update_polis_api_data,
-#       "epiCleanr::export", function(data, data_file_name) TRUE)
+#       "saveRDS", function(data, data_file_name) TRUE)
 #     mockery::stub(
 #       update_polis_api_data, "write_log_file_api",
 #       function(log_file_name, log_message) TRUE)

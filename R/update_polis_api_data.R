@@ -60,14 +60,14 @@ update_polis_api_data <- function(min_date,
 
   # Construct file names for data and log
   data_file_name <- paste0(file_path, "/", data_type, "_polis_data.rds")
-  log_file_name <- paste0(file_path, "/", "polis_data_update_log.xlsx")
+  log_file_name <- paste0(file_path, "/", "polis_data_update_log.rds")
 
   # set up the dates
   date_field <- get_api_date_suffix(data_type)$date_field
 
   # Load existing data if it exists
   if (file.exists(data_file_name)) {
-    full_data <- epiCleanr::import(data_file_name)
+    full_data <- readRDS(data_file_name)
     last_date_in_chunk <- as.Date(
       max(full_data[[date_field]], na.rm = T),
       format = "%Y-%m-%d"
@@ -131,7 +131,7 @@ update_polis_api_data <- function(min_date,
 
   # Save the updated full dataset
   if (save_directly) {
-    epiCleanr::export(full_data, data_file_name)
+    saveRDS(full_data, data_file_name, compress = "xz")
   } else {
     return(full_data)
   }

@@ -60,7 +60,7 @@ write_log_file_api <- function(log_file_name,
 
   # Append or create log file
   if (file.exists(log_file_name)) {
-    log_data <- epiCleanr::import(log_file_name)
+    log_data <- readRDS(log_file_name)
     log_data <- rbind(log_data, log_message)
   } else {
     log_data <- log_message
@@ -83,5 +83,5 @@ write_log_file_api <- function(log_file_name,
     )
 
   # Save log file
-  epiCleanr::export(log_data, log_file_name)
+  saveRDS(log_data, log_file_name)
 }
