@@ -31,7 +31,8 @@ Supported types include 'cases', 'virus', 'population',
 'env' (Environmental), 'geo' (Geographical), 'geo_synonym',
 'im' (Independent Monitoring), 'activity', 'sub_activ'
 (Sub-activities), and 'lqas' (Lot Quality Assurance
-Sampling), lab_specimen (Human Specimen), lab_specimen_virus
+Sampling), 'lab_specimen' (Human Specimen),
+'lab_env' (Environmental Sample), 'lab_specimen_virus'
 (Human Specimen Viruses). Default is 'cases'.}
 
 \item{region}{Region code for data filtering.

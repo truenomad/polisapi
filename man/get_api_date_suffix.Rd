@@ -10,8 +10,8 @@ get_api_date_suffix(data_type)
 \item{data_type}{A string specifying the type of data for which information
 is needed. Valid data types include 'cases', 'virus',
 'population', 'env', 'geo', 'geo_synonym', 'im', 'activity',
-'lab_specimen', 'lab_specimen_virus', 'sub_activ', and
-'lqas'.}
+'lab_specimen', 'lab_specimen_virus', 'lab_env',
+'sub_activ', and lqas'.}
 }
 \value{
 A list with two elements: 'endpoint_suffix', which is the suffix for

@@ -9,8 +9,8 @@
 #' @param data_type A string specifying the type of data for which information
 #'                  is needed. Valid data types include 'cases', 'virus',
 #'                  'population', 'env', 'geo', 'geo_synonym', 'im', 'activity',
-#'                  'lab_specimen', 'lab_specimen_virus', 'sub_activ', and
-#'                  'lqas'.
+#'                  'lab_specimen', 'lab_specimen_virus', 'lab_env',
+#'                  'sub_activ', and lqas'.
 #'
 #' @return A list with two elements: 'endpoint_suffix', which is the suffix for
 #'         the API endpoint corresponding to the data type, and 'date_field',
@@ -30,6 +30,7 @@ get_api_date_suffix <- function(data_type) {
     geo = "Geography", geo_synonym = "Synonym",
     lab_specimen = "LabSpecimen",
     lab_specimen_virus = "HumanSpecimenViruses",
+    lab_env = "EnvSample",
     im = "Im", activity = "Activity",
     sub_activ = "SubActivity", lqas = "Lqas"
   )
@@ -47,12 +48,13 @@ get_api_date_suffix <- function(data_type) {
     activity = "ActivityDateFrom",
     lab_specimen_virus = "PublishDate",
     lab_specimen = "CreatedDate",
+    lab_env = "CollectionDate",
     sub_activ = "DateFrom",
     lqas = "Start"
   )
 
   # Define date fields for each data type
- # for updated data
+  # for updated data
   date_fields <- c(
     cases = "LastUpdateDate",
     virus = "UpdatedDate", population = "UpdatedDate",
@@ -61,6 +63,7 @@ get_api_date_suffix <- function(data_type) {
     im = "PublishDate", activity = "LastUpdateDate",
     lab_specimen_virus = "PublishDate",
     lab_specimen = "LastUpdateDate",
+    lab_env = "LastUpdateDate",
     sub_activ = "UpdatedDate", lqas = "Start"
   )
 

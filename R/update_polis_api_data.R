@@ -11,13 +11,13 @@
 #'                 This date marks the beginning of the dataset to be retrieved.
 #' @param max_date End date for data retrieval, default is the current date.
 #'                 This date marks the end of the dataset to be retrieved.
-#' @param data_type Type of data to retrieve. Each option represents a different
-#'                  category of data available from the  POLIS API.
+#' @param data_type Type of data to retrieve.
 #'                  Supported types include 'cases', 'virus', 'population',
 #'                  'env' (Environmental), 'geo' (Geographical), 'geo_synonym',
 #'                  'im' (Independent Monitoring), 'activity', 'sub_activ'
 #'                  (Sub-activities), and 'lqas' (Lot Quality Assurance
-#'                  Sampling), lab_specimen (Human Specimen), lab_specimen_virus
+#'                  Sampling), 'lab_specimen' (Human Specimen),
+#'                  'lab_env' (Environmental Sample), 'lab_specimen_virus'
 #'                  (Human Specimen Viruses). Default is 'cases'.
 #' @param region Region code for data filtering, default is 'AFRO'.
 #'               This parameter filters the data by the specified WHO region.
