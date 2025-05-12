@@ -66,7 +66,7 @@ data <- get_polis_api_data(
   min_date = "2021-01-01",    
   max_date = "2021-01-31",
   data_type = "cases",
-  region = 'AFRO', 
+  region = 'AFRO',
   select_vars = NULL,
   polis_api_key = my_token,
   log_results = TRUE,
