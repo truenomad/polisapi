@@ -79,7 +79,7 @@ data <- get_polis_api_data(
 Use this for periodic data updates, minimizing redundant retrievals.
 - Checks for existing data and fetches new records.
 - Good when you need to quickly update your polis data.
-- Features built-in logging for update tracking.
+- Has built-in logging for update tracking.
 
 #### Usage Example
 
