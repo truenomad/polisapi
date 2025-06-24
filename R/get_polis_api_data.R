@@ -50,7 +50,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' data <- get_polis_api_data("2021-01-01", "2021-01-31", "cases", "AFRO")
+#' data <- get_polis_api_data("2020-01-01", "2021-01-31", "cases", "AFRO")
 #' }
 #' @export
 get_polis_api_data <- function(min_date = "2021-01-01",

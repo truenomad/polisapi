@@ -63,10 +63,10 @@ Retrieve data directly from the POLIS API for immediate analysis.
 ``` r
 # Fetch case data for a specific period and region
 data <- get_polis_api_data(
-  min_date = "2021-01-01",    
+  min_date = "2020-01-01",    
   max_date = "2021-01-31",
   data_type = "cases",
-  region = 'AFRO', 
+  region = 'AFRO',
   select_vars = NULL,
   polis_api_key = my_token,
   log_results = TRUE,
@@ -79,7 +79,7 @@ data <- get_polis_api_data(
 Use this for periodic data updates, minimizing redundant retrievals.
 - Checks for existing data and fetches new records.
 - Good when you need to quickly update your polis data.
-- Features built-in logging for update tracking.
+- Has built-in logging for update tracking.
 
 #### Usage Example
 
