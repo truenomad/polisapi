@@ -32,23 +32,27 @@
 #' @param country_code ISO3 country code to filter the data. Default is NULL.
 #' @param select_vars Vector of variables to select from the API response.
 #'                    If NULL (default), all variables are selected.
+#' @param updated_dates Logical indicating whether to use the 'LastUpdateDate'
 #' @param polis_api_key API key for authentication.
 #'                        Default is retrieved from the environment variable
 #'                        'POLIS_API_KEY'. An explicit API key can be provided
 #'                        if required.
-#' @param log_results Logical indicating whether to log the results of the API
-#' @param log_file_path Path to the directory where the log file will be saved
-#' @param updated_dates Logical indicating whether to use the 'LastUpdateDate'
-#' @return A data frame containing the requested data aggregated from all pages
-#'         of the API response. Each row represents a record, and columns
-#'         correspond to the variables in the dataset.
+#' @param save_polis Logical. If TRUE, saves retrieved data.
+#' @param polis_filname Filename for saving data.
+#' @param polis_path Directory path for saving data.
+#' @param max_polis_archive Number of archives to retain. Default = 5.
+#' @param output_format Format to save output. Default is 'rds'.
+#' @param log_results Logical. If TRUE, logs metadata about the pull.
+#' @param log_file_path Path to save log file if `log_results = TRUE`.
+#'      NULL is default.
+#'
+#' @return A data.frame of POLIS data (or NULL if `save_polis = TRUE` only).
 #'
 #' @examples
 #' \dontrun{
 #' data <- get_polis_api_data("2021-01-01", "2021-01-31", "cases", "AFRO")
 #' }
 #' @export
-
 get_polis_api_data <- function(min_date = "2021-01-01",
                                max_date = Sys.Date(),
                                data_type = "cases",
@@ -56,9 +60,14 @@ get_polis_api_data <- function(min_date = "2021-01-01",
                                country_code = NULL,
                                select_vars = NULL,
                                updated_dates = FALSE,
-                               polis_api_key,
+                               polis_api_key = Sys.getenv("POLIS_API_KEY"),
+                               save_polis = FALSE,
+                               polis_filname,
+                               polis_path,
+                               max_polis_archive = 5,
+                               output_format = "rds",
                                log_results = FALSE,
-                               log_file_path) {
+                               log_file_path = NULL) {
 
   # API Endpoint and URL Construction
   api_endpoint <- "https://extranet.who.int/polis/api/v2/"
@@ -126,6 +135,16 @@ get_polis_api_data <- function(min_date = "2021-01-01",
     # Save log file
     saveRDS(log_data, log_file_name)
 
+  }
+
+  # if saving
+  if (save_polis) {
+    save_polis_data(polis_data = full_data,
+                    polis_path = polis_path,
+                    filname = polis_filname,
+                    max_datasets = max_polis_archive,
+                    output_format = output_format)
+    return(invisible(NULL))
   }
 
   return(full_data)

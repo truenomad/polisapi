@@ -4,7 +4,13 @@
 \alias{save_polis_data}
 \title{Save Polis Data to compressed RDS File}
 \usage{
-save_polis_data(polis_data, polis_path, filname, max_datasets = 5)
+save_polis_data(
+  polis_data,
+  polis_path,
+  filname,
+  max_datasets = 5,
+  output_format = "rds"
+)
 }
 \arguments{
 \item{polis_data}{The POLIS data object to be saved.}
@@ -16,6 +22,9 @@ only the 5 most recent datasets, deleting older ones.}
 \item{filname}{The name of the file to be saved.}
 
 \item{max_datasets}{The max number of datasets to retain in the directory.}
+
+\item{output_format}{The output format for the saved file. Options are either
+rds or qs2 Default is rds}
 }
 \value{
 Invisible NULL. This function is used for its side effect of

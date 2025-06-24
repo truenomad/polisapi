@@ -31,5 +31,6 @@ Suggests:
     xml2,
     httpcode,
     cli,
-    stringr
+    stringr,
+    qs2
 Config/testthat/edition: 3

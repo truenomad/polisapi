@@ -11,6 +11,8 @@
 #'   only the 5 most recent datasets, deleting older ones.
 #' @param filname The name of the file to be saved.
 #' @param max_datasets The max number of datasets to retain in the directory.
+#' @param output_format The output format for the saved file. Options are either
+#'    rds or qs2 Default is rds
 #'
 #' @return Invisible NULL. This function is used for its side effect of
 #'   saving a file and potentially deleting older files, rather than for
@@ -23,21 +25,39 @@
 #'
 #' @export
 #' @export
-save_polis_data <- function(polis_data, polis_path, filname, max_datasets = 5) {
-  cli::cli_process_start("Saving POLIS data into a compressed RDS file.")
+save_polis_data <- function(polis_data, polis_path, filname, max_datasets = 5,
+                            output_format = "rds") {
 
-  # Generate the file name based on the current date
-  suffix_name <- sprintf("_%s.rds", format(Sys.Date(), "%Y_%V"))
+  cli::cli_process_start("Saving POLIS data into a compressed file.")
+
+  output_format <- tolower(gsub("^\\.", "", output_format))
+
+  if (tolower(output_format) %in% c("qs", "qs2")) {
+    suffix <- "qs2"
+  } else if (tolower(output_format) == "rds") {
+    suffix <- "rds"
+  } else {
+    stop("Unsupported output_format: ", output_format)
+  }
+
+  suffix_name <- sprintf("_%s_%s.%s",
+                         format(Sys.Date(), "%G"),
+                         format(Sys.Date(), "%V"),
+                         suffix)
+
   full_path <- file.path(polis_path, paste0(filname, suffix_name))
 
-  # Save POLIS list
-  saveRDS(polis_data, full_path, compress = "xz")
+  if (output_format == "rds") {
+    saveRDS(polis_data, full_path, compress = "xz")
+  } else {
+    qs2::qs_save(polis_data, full_path)
+  }
 
   cli::cli_process_done()
 
   # Check existing datasets and keep only the 5 most recent
   existing_files <- list.files(
-    polis_path, pattern = "\\.rds$", full.names = TRUE)
+    polis_path, pattern = paste0("\\.", output_format, "$"), full.names = TRUE)
 
   # Exclude files that contain 'polis_data_update_log' in the name
   existing_files <- grep(
@@ -50,7 +70,7 @@ save_polis_data <- function(polis_data, polis_path, filname, max_datasets = 5) {
   if (length(existing_files) > max_datasets) {
     # Sort files by date, assuming the naming convention holds the date info
     file_dates <- sapply(existing_files, function(x) {
-      as.Date(stringr::str_extract(x, "\\d{4}_\\d{2}"), "%Y_%V")
+      as.Date(stringr::str_extract(x, "\\d{4}_\\d{2}"), "%G_%V")
     })
 
     oldest_files <- existing_files[order(file_dates)][1:(

@@ -12,9 +12,14 @@ get_polis_api_data(
   country_code = NULL,
   select_vars = NULL,
   updated_dates = FALSE,
-  polis_api_key,
+  polis_api_key = Sys.getenv("POLIS_API_KEY"),
+  save_polis = FALSE,
+  polis_filname,
+  polis_path,
+  max_polis_archive = 5,
+  output_format = "rds",
   log_results = FALSE,
-  log_file_path
+  log_file_path = NULL
 )
 }
 \arguments{
@@ -52,14 +57,23 @@ Default is retrieved from the environment variable
 'POLIS_API_KEY'. An explicit API key can be provided
 if required.}
 
-\item{log_results}{Logical indicating whether to log the results of the API}
+\item{save_polis}{Logical. If TRUE, saves retrieved data.}
 
-\item{log_file_path}{Path to the directory where the log file will be saved}
+\item{polis_filname}{Filename for saving data.}
+
+\item{polis_path}{Directory path for saving data.}
+
+\item{max_polis_archive}{Number of archives to retain. Default = 5.}
+
+\item{output_format}{Format to save output. Default is 'rds'.}
+
+\item{log_results}{Logical. If TRUE, logs metadata about the pull.}
+
+\item{log_file_path}{Path to save log file if \code{log_results = TRUE}.
+NULL is default.}
 }
 \value{
-A data frame containing the requested data aggregated from all pages
-of the API response. Each row represents a record, and columns
-correspond to the variables in the dataset.
+A data.frame of POLIS data (or NULL if \code{save_polis = TRUE} only).
 }
 \description{
 This function serves as a gateway to retrieve various types of health-related
