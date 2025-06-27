@@ -28,7 +28,7 @@
 #' @param region Region code for data filtering.
 #'               Represents the WHO region from which to retrieve the data.
 #'               Possible values are AFRO; AMRO; EMRO; EURO; SEARO; WPRO Use
-#'               'Global' to retrieve global data. Default is 'AFRO'.
+#'               'Global' to retrieve global data. Default is 'Global'.
 #' @param country_code ISO3 country code to filter the data. Default is NULL.
 #' @param select_vars Vector of variables to select from the API response.
 #'                    If NULL (default), all variables are selected.
@@ -56,7 +56,7 @@
 get_polis_api_data <- function(min_date = "2021-01-01",
                                max_date = Sys.Date(),
                                data_type = "cases",
-                               region = "AFRO",
+                               region = "Global",
                                country_code = NULL,
                                select_vars = NULL,
                                updated_dates = FALSE,
@@ -68,6 +68,28 @@ get_polis_api_data <- function(min_date = "2021-01-01",
                                output_format = "rds",
                                log_results = FALSE,
                                log_file_path = NULL) {
+
+  if (polis_api_key == "") {
+    cli::cli_alert_warning("No POLIS API key found in environment.")
+
+    response <- readline(
+      "Would you like to enter your API key now? (yes/no): ")
+
+    if (tolower(response) %in% c("yes", "y")) {
+      key_input <- readline(
+        "Please enter your API key without qoutations: ")
+      if (key_input == "") {
+        cli::cli_alert_danger("No key entered. Exiting.")
+        stop("POLIS API key is required.")
+      }
+      Sys.setenv(POLIS_API_KEY = key_input)
+      polis_api_key <- key_input
+      cli::cli_alert_success("API key has been set for this session.")
+    } else {
+      cli::cli_alert_danger("Cannot proceed without API key.")
+      stop("POLIS API key is required.")
+    }
+  }
 
   # API Endpoint and URL Construction
   api_endpoint <- "https://extranet.who.int/polis/api/v2/"
