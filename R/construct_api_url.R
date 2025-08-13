@@ -15,8 +15,8 @@
 #' @param country_code ISO3 country code to filter the data. Default is NULL.
 #' @param date_field The field name in the API corresponding to the date.
 #' @param region_field The field name in the API corresponding to the region.
-#' @param region The specific region to filter the data. If NULL or empty,
-#'        no region filter is applied.
+#' @param region The specific region to filter the data. If NULL, empty, or
+#'        "global", no region filter is applied.
 #' @param select_vars A vector of field names to be included in the API
 #'        response. If NULL or empty, no selective fields are applied.
 #'

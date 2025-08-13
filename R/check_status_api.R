@@ -22,7 +22,7 @@ check_status_api <- function(response_status_code) {
   code <- httpcode::http_code(response_status_code)
 
   if (code$status_code != 200) {
-    stop(
+    cli::cli_abort(
       glue::glue(
         "{code$status_code}: {code$explanation}",
         "\n For a full explanation of this error call: ",

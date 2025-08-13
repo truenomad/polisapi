@@ -9,28 +9,31 @@ Authors@R:
            comment = c(
            second_email = "mohamedayusuf87@gmail.com",
            ORCID = "0000-0002-9339-4613")))
+Author: Mohamed A. Yusuf [aut, cre]
+Maintainer: Mohamed A. Yusuf <moyusuf@who.int>
 Description: This R package makes it easy to download Polio data from the WHO 
             POLIS database.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-Suggests: 
-    RcppSimdJson,
+Depends: R (>= 4.1.0)
+Imports:
+    cli,
     dplyr,
-    epiCleanr,
     glue,
+    httpcode,
+    httr2,
+    stringr,
+    tidyselect
+Suggests: 
+    epiCleanr,
     here,
     httr,
-    tidyselect,
-    testthat (>= 3.0.0),
-    httr2,
     jsonlite,
     mockery,
+    qs2,
+    testthat (>= 3.0.0),
     withr,
-    xml2,
-    httpcode,
-    cli,
-    stringr,
-    qs2
+    xml2
 Config/testthat/edition: 3

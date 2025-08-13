@@ -8,14 +8,14 @@ get_polis_api_data(
   min_date = "2021-01-01",
   max_date = Sys.Date(),
   data_type = "cases",
-  region = "AFRO",
+  region = "Global",
   country_code = NULL,
   select_vars = NULL,
   updated_dates = FALSE,
   polis_api_key = Sys.getenv("POLIS_API_KEY"),
   save_polis = FALSE,
-  polis_filname,
-  polis_path,
+  polis_filname = NULL,
+  polis_path = NULL,
   max_polis_archive = 5,
   output_format = "rds",
   log_results = FALSE,
@@ -43,7 +43,7 @@ Sampling), 'lab_specimen' (Human Specimen),
 \item{region}{Region code for data filtering.
 Represents the WHO region from which to retrieve the data.
 Possible values are AFRO; AMRO; EMRO; EURO; SEARO; WPRO Use
-'Global' to retrieve global data. Default is 'AFRO'.}
+'Global' to retrieve global data. Default is 'Global'.}
 
 \item{country_code}{ISO3 country code to filter the data. Default is NULL.}
 
@@ -57,11 +57,13 @@ Default is retrieved from the environment variable
 'POLIS_API_KEY'. An explicit API key can be provided
 if required.}
 
-\item{save_polis}{Logical. If TRUE, saves retrieved data.}
+\item{save_polis}{Logical. If TRUE, saves retrieved data. Default is FALSE.}
 
-\item{polis_filname}{Filename for saving data.}
+\item{polis_filname}{Filename for saving data. Required when save_polis = TRUE.
+Default is NULL.}
 
-\item{polis_path}{Directory path for saving data.}
+\item{polis_path}{Directory path for saving data. Required when save_polis = TRUE.
+Default is NULL.}
 
 \item{max_polis_archive}{Number of archives to retain. Default = 5.}
 
@@ -89,6 +91,6 @@ unsuccessful API calls.
 }
 \examples{
 \dontrun{
-data <- get_polis_api_data("2021-01-01", "2021-01-31", "cases", "AFRO")
+data <- get_polis_api_data("2020-01-01", "2021-01-31", "cases", "AFRO")
 }
 }

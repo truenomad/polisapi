@@ -24,7 +24,6 @@
 #' # save_polis_data(polis_data, "./polis_datasets")
 #'
 #' @export
-#' @export
 save_polis_data <- function(polis_data, polis_path, filname, max_datasets = 5,
                             output_format = "rds") {
 
@@ -37,7 +36,7 @@ save_polis_data <- function(polis_data, polis_path, filname, max_datasets = 5,
   } else if (tolower(output_format) == "rds") {
     suffix <- "rds"
   } else {
-    stop("Unsupported output_format: ", output_format)
+    cli::cli_abort("Unsupported output_format: {output_format}")
   }
 
   suffix_name <- sprintf("_%s_%s.%s",

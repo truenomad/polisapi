@@ -37,9 +37,11 @@
 #'                        Default is retrieved from the environment variable
 #'                        'POLIS_API_KEY'. An explicit API key can be provided
 #'                        if required.
-#' @param save_polis Logical. If TRUE, saves retrieved data.
-#' @param polis_filname Filename for saving data.
-#' @param polis_path Directory path for saving data.
+#' @param save_polis Logical. If TRUE, saves retrieved data. Default is FALSE.
+#' @param polis_filname Filename for saving data. Required when save_polis = TRUE.
+#'                      Default is NULL.
+#' @param polis_path Directory path for saving data. Required when save_polis = TRUE.
+#'                   Default is NULL.
 #' @param max_polis_archive Number of archives to retain. Default = 5.
 #' @param output_format Format to save output. Default is 'rds'.
 #' @param log_results Logical. If TRUE, logs metadata about the pull.
@@ -62,34 +64,22 @@ get_polis_api_data <- function(min_date = "2021-01-01",
                                updated_dates = FALSE,
                                polis_api_key = Sys.getenv("POLIS_API_KEY"),
                                save_polis = FALSE,
-                               polis_filname,
-                               polis_path,
+                               polis_filname = NULL,
+                               polis_path = NULL,
                                max_polis_archive = 5,
                                output_format = "rds",
                                log_results = FALSE,
                                log_file_path = NULL) {
 
-  if (polis_api_key == "") {
-    cli::cli_alert_warning("No POLIS API key found in environment.")
-
-    response <- readline(
-      "Would you like to enter your API key now? (yes/no): ")
-
-    if (tolower(response) %in% c("yes", "y")) {
-      key_input <- readline(
-        "Please enter your API key without qoutations: ")
-      if (key_input == "") {
-        cli::cli_alert_danger("No key entered. Exiting.")
-        stop("POLIS API key is required.")
-      }
-      Sys.setenv(POLIS_API_KEY = key_input)
-      polis_api_key <- key_input
-      cli::cli_alert_success("API key has been set for this session.")
-    } else {
-      cli::cli_alert_danger("Cannot proceed without API key.")
-      stop("POLIS API key is required.")
+  # Validate save_polis parameters
+  if (save_polis) {
+    if (is.null(polis_filname) || is.null(polis_path)) {
+      cli::cli_abort("When save_polis = TRUE, both polis_filname and polis_path must be provided.")
     }
   }
+
+  # Validate API key
+  polis_api_key <- validate_polis_api_key(polis_api_key)
 
   # API Endpoint and URL Construction
   api_endpoint <- "https://extranet.who.int/polis/api/v2/"
@@ -128,7 +118,7 @@ get_polis_api_data <- function(min_date = "2021-01-01",
 
     # Check if log file name is provided
     if (is.null(log_file_path)) {
-      warning("No log file name provided. Logging is disabled.")
+      cli::cli_alert_warning("No log file name provided. Logging is disabled.")
       return(invisible(NULL))
     }
 

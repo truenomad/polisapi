@@ -69,7 +69,7 @@ get_api_date_suffix <- function(data_type) {
 
   # Check if the provided data type is valid
   if (!data_type %in% names(endpoint_suffixes)) {
-    stop("Invalid data_type specified")
+    cli::cli_abort("Invalid data_type specified: {data_type}")
   }
 
   # Return endpoint suffix and date field

@@ -65,6 +65,8 @@ extract_entity_sets <- function(url) {
 #' status_code <- get_status_code("countries")
 #' }
 get_status_code <- function(table, api_token = Sys.getenv("POLIS_API_KEY")) {
+  # Validate API key
+  api_token <- validate_polis_api_key(api_token)
   url <- paste0("https://extranet.who.int/polis/api/v2/", table, "?$top=5")
   tryCatch({
     response <- httr::GET(
@@ -111,6 +113,9 @@ get_status_code <- function(table, api_token = Sys.getenv("POLIS_API_KEY")) {
 check_tables_availability <- function(
     api_token = Sys.getenv("POLIS_API_KEY"),
     tables_to_check = NULL) {
+
+  # Validate API key
+  api_token <- validate_polis_api_key(api_token)
 
   # Get the list of tables
   polis_api_root_url <- "https://extranet.who.int/polis/api/v2/$metadata?token="

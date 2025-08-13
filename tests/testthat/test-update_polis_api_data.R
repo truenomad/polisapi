@@ -4,18 +4,30 @@
 # Setup: Mock functions
 mock_file_exists <- function(path) TRUE
 mock_import_data <- function(path) {
-  data.frame(Date = seq(as.Date("2021-01-01"),
-                        as.Date("2021-01-10"), by = "day"))
+  data.frame(LastUpdateDate = seq(as.Date("2021-01-01"),
+                                  as.Date("2021-01-10"), by = "day"))
 }
 mock_get_polis_api_data <- function(...) {
-  data.frame(Date = seq(as.Date("2021-01-11"),
-                        as.Date("2021-01-20"), by = "day"))
+  data.frame(LastUpdateDate = seq(as.Date("2021-01-11"),
+                                  as.Date("2021-01-20"), by = "day"))
 }
 mock_export_data <- function(data, path) TRUE
 mock_write_log_file_api <- function(log_file_name, log_message) TRUE
+mock_get_api_date_suffix <- function(data_type) {
+  list(
+    endpoint_suffix = "Case",
+    date_fields_initial = "CaseDate", 
+    date_field = "LastUpdateDate"
+  )
+}
+mock_validate_polis_api_key <- function(key) "test_api_key"
 
 
 test_that("Main update_polis_api_data functionality", {
+  mockery::stub(
+    update_polis_api_data, "validate_polis_api_key", mock_validate_polis_api_key)
+  mockery::stub(
+    update_polis_api_data, "get_api_date_suffix", mock_get_api_date_suffix)
   mockery::stub(
     update_polis_api_data, "file.exists", mock_file_exists)
   mockery::stub(
@@ -27,9 +39,9 @@ test_that("Main update_polis_api_data functionality", {
   mockery::stub(
     update_polis_api_data, "write_log_file_api", mock_write_log_file_api)
 
-  # Test 1: When data is being update
+  # Test 1: When data is being updated with file_path provided
   suppressWarnings(
-    result <- update_polis_api_data("2021-01-01", "2021-01-20")
+    result <- update_polis_api_data("2021-01-01", "2021-01-20", file_path = "/tmp/test")
   )
   testthat::expect_equal(nrow(result), 20)
 

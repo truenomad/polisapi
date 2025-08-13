@@ -15,8 +15,13 @@ mock_process_api_response <- function(response) {
   data$data
 }
 
+# Mock API key validation
+mock_validate_polis_api_key <- function(key) "test_api_key"
+
 testthat::test_that("get_polis_api_data returns correct data structure", {
   # Stub the external functions with mocks
+  mockery::stub(
+    get_polis_api_data, "validate_polis_api_key", mock_validate_polis_api_key)
   mockery::stub(
     get_polis_api_data, "iterative_api_call", mock_iterative_api_call)
   mockery::stub(

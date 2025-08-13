@@ -14,7 +14,7 @@ update_polis_api_data(
   file_path = NULL,
   save_directly = FALSE,
   log_results = FALSE,
-  polis_api_key = NULL
+  polis_api_key = Sys.getenv("POLIS_API_KEY")
 )
 }
 \arguments{
@@ -42,20 +42,20 @@ This parameter filters the data by the specified WHO region.}
 This parameter allows for the selection of specific
 variables from the API response.}
 
-\item{file_path}{Path for the data and log files, default is a preset
-directory. This defines the storage location for data
+\item{file_path}{Path for the data and log files. Required when save_directly = TRUE.
+Default is NULL. This defines the storage location for data
 and logs.}
 
 \item{save_directly}{Boolean indicating whether data should be saved directly.
-Default is TRUE. If FALSE, the function returns a
+Default is FALSE. If FALSE, the function returns a
 data frame of the aggregated data.}
 
 \item{log_results}{Boolean indicating whether to log update sessions.
-Default is TRUE. This controls the logging of updates.}
+Default is FALSE. This controls the logging of updates.}
 
-\item{polis_api_key}{API key for authentication, default from environment.
-This is used for accessing and authenticating with
-the API.}
+\item{polis_api_key}{API key for authentication. Default is retrieved from
+the environment variable 'POLIS_API_KEY'. This is used
+for accessing and authenticating with the API.}
 }
 \value{
 If save_directly is FALSE, returns a data frame of the aggregated
