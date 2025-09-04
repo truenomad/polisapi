@@ -1,1 +1,4 @@
 .Rproj.user
+.Rhistory
+.cla*
+polisapi.Rcheck/00check.log
