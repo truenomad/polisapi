@@ -4,7 +4,7 @@
 \alias{iterative_api_call}
 \title{Try API Call with Retry Logic}
 \usage{
-iterative_api_call(url, token = NULL, max_attempts = 3)
+iterative_api_call(url, token = NULL, max_attempts = 3, show_progress = TRUE)
 }
 \arguments{
 \item{url}{The URL for the API endpoint to which the GET request is made.}
@@ -13,6 +13,9 @@ iterative_api_call(url, token = NULL, max_attempts = 3)
 
 \item{max_attempts}{The maximum number of attempts to make the API call.
 Default is 3 attempts.}
+
+\item{show_progress}{Logical. If TRUE, displays a progress bar across
+iterative requests; if FALSE, suppresses progress.}
 }
 \value{
 The response from the API call if successful, or an error message
