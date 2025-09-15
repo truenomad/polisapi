@@ -12,6 +12,8 @@
 #' @param token The authorization token required for the API request.
 #' @param max_attempts The maximum number of attempts to make the API call.
 #'        Default is 3 attempts.
+#' @param show_progress Logical. If TRUE, displays a progress bar across
+#'        iterative requests; if FALSE, suppresses progress.
 #'
 #' @return The response from the API call if successful, or an error message
 #'         if all attempts fail.
@@ -22,7 +24,7 @@
 #' }
 #' @export
 
-iterative_api_call <- function(url, token = NULL, max_attempts = 3) {
+iterative_api_call <- function(url, token = NULL, max_attempts = 3, show_progress = TRUE) {
   # Configure the initial request
   req <- httr2::request(url) |>
     httr2::req_headers(`authorization-token` = token) |>
@@ -50,10 +52,9 @@ iterative_api_call <- function(url, token = NULL, max_attempts = 3) {
       req |> httr2::req_url(next_link)
     },
     max_reqs = Inf,
-    progress = list(
+    progress = if (isTRUE(show_progress)) list(
       name = "Downloading POLIS pages:",
-      format_done = "POLIS data downloaded :)",
-      clear = FALSE
-    )
+      clear = TRUE
+    ) else NULL
   )
 }

@@ -47,6 +47,8 @@
 #' @param log_results Logical. If TRUE, logs metadata about the pull.
 #' @param log_file_path Path to save log file if `log_results = TRUE`.
 #'      NULL is default.
+#' @param quiet Logical. If TRUE, suppresses progress messages and
+#'      non-critical warnings during download and logging. Default FALSE.
 #'
 #' @return A data.frame of POLIS data (or NULL if `save_polis = TRUE` only).
 #'
@@ -55,26 +57,32 @@
 #' data <- get_polis_api_data("2020-01-01", "2021-01-31", "cases", "AFRO")
 #' }
 #' @export
-get_polis_api_data <- function(min_date = "2021-01-01",
-                               max_date = Sys.Date(),
-                               data_type = "cases",
-                               region = "Global",
-                               country_code = NULL,
-                               select_vars = NULL,
-                               updated_dates = FALSE,
-                               polis_api_key = Sys.getenv("POLIS_API_KEY"),
-                               save_polis = FALSE,
-                               polis_filname = NULL,
-                               polis_path = NULL,
-                               max_polis_archive = 5,
-                               output_format = "rds",
-                               log_results = FALSE,
-                               log_file_path = NULL) {
+get_polis_api_data <- function(
+  min_date = "2021-01-01",
+  max_date = Sys.Date(),
+  data_type = "cases",
+  region = "Global",
+  country_code = NULL,
+  select_vars = NULL,
+  updated_dates = FALSE,
+  polis_api_key = Sys.getenv("POLIS_API_KEY"),
+  save_polis = FALSE,
+  polis_filname = NULL,
+  polis_path = NULL,
+  max_polis_archive = 5,
+  output_format = "rds",
+  log_results = FALSE,
+  log_file_path = NULL,
+  quiet = FALSE
+) {
 
   # Validate save_polis parameters
   if (save_polis) {
     if (is.null(polis_filname) || is.null(polis_path)) {
-      cli::cli_abort("When save_polis = TRUE, both polis_filname and polis_path must be provided.")
+      cli::cli_abort(paste(
+        "When save_polis = TRUE, both polis_filname and",
+        "polis_path must be provided."
+      ))
     }
   }
 
@@ -93,12 +101,13 @@ get_polis_api_data <- function(min_date = "2021-01-01",
   }
 
   # set up region field
-  if (tolower(region) == "global"  || is.null(region)) {
+  if (tolower(region) == "global" || is.null(region)) {
     region_field <- NULL
   } else {
     region_field <- get_api_date_suffix(data_type)$region_field
     # set up region field name
-    region_field <- if (data_type == "virus") "RegionName" else "WHORegion"
+    region_field <- if (data_type == "virus") "RegionName" else
+      "WHORegion"
   }
 
   # Construct the full API URL
@@ -107,23 +116,42 @@ get_polis_api_data <- function(min_date = "2021-01-01",
     date_field, country_code, region_field, region, select_vars
   )
 
-  # all API iteratively
-  response <- iterative_api_call(api_url, token = polis_api_key)
+  # all API iteratively (be compatible with mocked signatures)
+  iter_fun <- iterative_api_call
+  has_show <- "show_progress" %in% names(formals(iter_fun))
+  if (isTRUE(has_show)) {
+    response <- iter_fun(
+      api_url,
+      token = polis_api_key,
+      show_progress = !isTRUE(quiet)
+    )
+  } else {
+    response <- iter_fun(api_url, token = polis_api_key)
+  }
 
   # process API response
   full_data <- process_api_response(response)
+
+  # Notify once after full download completes
+  if (!isTRUE(quiet)) cli::cli_alert_success("POLIS data downloaded :)")
 
   # log results
   if (log_results) {
 
     # Check if log file name is provided
     if (is.null(log_file_path)) {
-      cli::cli_alert_warning("No log file name provided. Logging is disabled.")
+      if (!isTRUE(quiet)) {
+        cli::cli_alert_warning(
+          "No log file name provided. Logging is disabled."
+        )
+      }
       return(invisible(NULL))
     }
 
     # set up log file name
-    log_file_name <- paste0(log_file_path, "/", "polis_data_update_log.rds")
+    log_file_name <- paste0(
+      log_file_path, "/", "polis_data_update_log.rds"
+    )
 
     # Construct the log message
     log_message <- data.frame(
@@ -151,11 +179,13 @@ get_polis_api_data <- function(min_date = "2021-01-01",
 
   # if saving
   if (save_polis) {
-    save_polis_data(polis_data = full_data,
-                    polis_path = polis_path,
-                    filname = polis_filname,
-                    max_datasets = max_polis_archive,
-                    output_format = output_format)
+    save_polis_data(
+      polis_data = full_data,
+      polis_path = polis_path,
+      filname = polis_filname,
+      max_datasets = max_polis_archive,
+      output_format = output_format
+    )
     return(invisible(NULL))
   }
 

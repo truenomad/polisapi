@@ -19,7 +19,8 @@ get_polis_api_data(
   max_polis_archive = 5,
   output_format = "rds",
   log_results = FALSE,
-  log_file_path = NULL
+  log_file_path = NULL,
+  quiet = FALSE
 )
 }
 \arguments{
@@ -73,6 +74,9 @@ Default is NULL.}
 
 \item{log_file_path}{Path to save log file if \code{log_results = TRUE}.
 NULL is default.}
+
+\item{quiet}{Logical. If TRUE, suppresses progress messages and
+non-critical warnings during download and logging. Default FALSE.}
 }
 \value{
 A data.frame of POLIS data (or NULL if \code{save_polis = TRUE} only).
