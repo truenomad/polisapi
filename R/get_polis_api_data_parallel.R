@@ -175,7 +175,7 @@ get_polis_api_data_parallel <- function(
     pb_id <- NULL
     if (show_cli) {
       pb_id <- cli::cli_progress_bar(
-        name = "Parallel chunks",
+        name = "Downloading 1-month ranges (parallel)",
         total = length(idxs)
       )
     }
