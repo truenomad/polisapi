@@ -36,6 +36,7 @@ facilitating easy access across R scripts and sessions.
 # Load the POLIS API Downloader package
 library(polisapi)
 
+
 # Set your access token securely in the R environment
 usethis::edit_r_environ()
 # Add the following line to your .Renviron file:
