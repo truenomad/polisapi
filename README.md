@@ -90,6 +90,7 @@ Downloads data sequentially from the POLIS API. Best for smaller date ranges or 
 **Example:**
 
 ``` r
+
 # Download case data for African Region
 cases_data <- get_polis_api_data(
   min_date = "2023-01-01",
