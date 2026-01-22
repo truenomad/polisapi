@@ -37,8 +37,8 @@ construct_api_url <- function(endpoint, suffix, min_date, max_date,
 
   # Date filter
   date_filter <- glue::glue(
-    "{date_field} ge DateTime'{min_date}' and ",
-    "{date_field} le DateTime'{max_date}'"
+    "{date_field} ge {min_date} and ",
+    "{date_field} le {max_date}"
   )
 
   # Region filter
