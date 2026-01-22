@@ -29,7 +29,6 @@ Imports:
     stringr,
     tidyselect
 Suggests:
-    epiCleanr,
     here,
     httr,
     jsonlite,
