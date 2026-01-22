@@ -30,4 +30,7 @@ check_status_api <- function(response_status_code) {
       )
     )
   }
+
+
+  invisible(TRUE)
 }

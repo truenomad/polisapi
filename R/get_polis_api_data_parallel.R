@@ -120,8 +120,7 @@ get_polis_api_data_parallel <- function(
   # Prepare tasks as a data.frame to keep order
   tasks <- data.frame(
     start = starts,
-    end = ends,
-    stringsAsFactors = FALSE
+    end = ends
   )
 
   # Export small objects used inside the worker function
@@ -222,13 +221,13 @@ get_polis_api_data_parallel <- function(
         )
       }
     } else {
-      # For logging we need date field and endpoint suffix; reuse helpers
-      endpoint_suffix <-
-        get_api_date_suffix(data_type)$endpoint_suffix
+      # For logging we need date field and endpoint suffix
+      suffix_info <- get_api_date_suffix(data_type)
+      endpoint_suffix <- suffix_info$endpoint_suffix
       date_field <- if (updated_dates) {
-        get_api_date_suffix(data_type)$date_field
+        suffix_info$date_field
       } else {
-        get_api_date_suffix(data_type)$date_fields_initial
+        suffix_info$date_fields_initial
       }
 
       log_file_name <- paste0(

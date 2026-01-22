@@ -104,10 +104,7 @@ get_polis_api_data <- function(
   if (tolower(region) == "global" || is.null(region)) {
     region_field <- NULL
   } else {
-    region_field <- get_api_date_suffix(data_type)$region_field
-    # set up region field name
-    region_field <- if (data_type == "virus") "RegionName" else
-      "WHORegion"
+    region_field <- if (data_type == "virus") "RegionName" else "WHORegion"
   }
 
   # Construct the full API URL
@@ -138,42 +135,41 @@ get_polis_api_data <- function(
   # log results
   if (log_results) {
 
-    # Check if log file name is provided
+    # Check if log file path is provided
     if (is.null(log_file_path)) {
       if (!isTRUE(quiet)) {
         cli::cli_alert_warning(
-          "No log file name provided. Logging is disabled."
+          "No log file path provided. Logging is disabled."
         )
       }
-      return(invisible(NULL))
-    }
-
-    # set up log file name
-    log_file_name <- paste0(
-      log_file_path, "/", "polis_data_update_log.rds"
-    )
-
-    # Construct the log message
-    log_message <- data.frame(
-      Region = tools::toTitleCase(region),
-      QueryStartDate = as.Date(min_date, format = "%Y-%m-%d"),
-      QueryEndDate = as.Date(max_date, format = "%Y-%m-%d"),
-      DataStartDate = min(as.Date(full_data[[date_field]])),
-      DataEndDate = max(as.Date(full_data[[date_field]])),
-      PolisDataType = as.character(endpoint_suffix),
-      NumberOfVariables = ncol(full_data),
-      NumberOfRows = format(nrow(full_data), big.mark = ",")
-    )
-
-    if (file.exists(log_file_name)) {
-      log_data <- readRDS(log_file_name)
-      log_data <- rbind(log_data, log_message)
     } else {
-      log_data <- log_message
-    }
+      # set up log file name
+      log_file_name <- paste0(
+        log_file_path, "/", "polis_data_update_log.rds"
+      )
 
-    # Save log file
-    saveRDS(log_data, log_file_name)
+      # Construct the log message
+      log_message <- data.frame(
+        Region = tools::toTitleCase(region),
+        QueryStartDate = as.Date(min_date, format = "%Y-%m-%d"),
+        QueryEndDate = as.Date(max_date, format = "%Y-%m-%d"),
+        DataStartDate = min(as.Date(full_data[[date_field]])),
+        DataEndDate = max(as.Date(full_data[[date_field]])),
+        PolisDataType = as.character(endpoint_suffix),
+        NumberOfVariables = ncol(full_data),
+        NumberOfRows = format(nrow(full_data), big.mark = ",")
+      )
+
+      if (file.exists(log_file_name)) {
+        log_data <- readRDS(log_file_name)
+        log_data <- rbind(log_data, log_message)
+      } else {
+        log_data <- log_message
+      }
+
+      # Save log file
+      saveRDS(log_data, log_file_name)
+    }
 
   }
 

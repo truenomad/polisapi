@@ -1,14 +1,13 @@
 #' Process API Response
 #'
-#' This function processes the response from an API call. It checks the status
-#' code of the response; if the status code is 200, indicating a successful
-#' response, it parses the content of the response using.
+#' This function processes the response from an API call. It extracts successful
+#' responses and parses the JSON content, combining all pages of results into
+#' a single data frame.
 #'
 #' @param response The response object from an API call made using the `httr2`
-#'       package.
+#'       package, typically from `iterative_api_call()`.
 #'
-#' @return A `dataframe`, which is the parsed data from the response If the
-#'         response is unsuccessful, both elements of the list are NULL.
+#' @return A data frame containing the combined data from all response pages.
 #'
 #' @examples
 #' \dontrun{

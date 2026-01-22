@@ -54,8 +54,7 @@ write_log_file_api <- function(log_file_name,
     SessionStartDate = as.Date(min_date, format = "%Y-%m-%d"),
     SessionEndDate = as.Date(session_end_date, format = "%Y-%m-%d"),
     DataType = as.character(data_type),
-    NewRowsAdded = format(nrow(new_data), big.mark = ","),
-    stringsAsFactors = FALSE
+    NewRowsAdded = format(nrow(new_data), big.mark = ",")
   )
 
   # Append or create log file

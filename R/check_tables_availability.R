@@ -25,6 +25,7 @@
 #' # Extract the entity sets
 #' xml_df <- extract_entity_sets(url)
 #' }
+#' @keywords internal
 extract_entity_sets <- function(url) {
   response <- httr::GET(url)
   content <- httr::content(response, as = "text")
@@ -44,9 +45,8 @@ entity_sets <- xml2::xml_find_all(
 
   # Extract attributes from EntitySet nodes and convert to a data frame
   data.frame(
-    `DataName` = xml2::xml_attr(entity_sets, "Name"),
-    `EntityType` = xml2::xml_attr(entity_sets, "EntityType"),
-    stringsAsFactors = FALSE
+    DataName = xml2::xml_attr(entity_sets, "Name"),
+    EntityType = xml2::xml_attr(entity_sets, "EntityType")
   ) |>
     dplyr::group_by(`EntityType`) |>
     dplyr::slice(1) |>
@@ -71,6 +71,7 @@ entity_sets <- xml2::xml_find_all(
 #' # Get the status code for the "countries" table
 #' status_code <- get_status_code("countries")
 #' }
+#' @keywords internal
 get_status_code <- function(table, api_token = Sys.getenv("POLIS_API_KEY")) {
   url <- paste0("https://extranet.who.int/polis/api/v2/", table, "?$top=5")
   tryCatch({
@@ -114,7 +115,7 @@ get_status_code <- function(table, api_token = Sys.getenv("POLIS_API_KEY")) {
 #'                       "im", "labspecimen")
 #' )
 #' }
-#'@export
+#' @export
 check_tables_availability <- function(
     api_token = Sys.getenv("POLIS_API_KEY"),
     tables_to_check = NULL) {
@@ -144,8 +145,10 @@ check_tables_availability <- function(
     }
   }
 
-  # Disable SSL verification and set a timeout
-  httr::set_config(httr::config(ssl_verifypeer = 0L))
+  # Save current settings and restore on exit
+
+  old_timeout <- getOption("timeout")
+  on.exit(options(timeout = old_timeout), add = TRUE)
   options(timeout = 5)
 
   # Loop through tables and check availability

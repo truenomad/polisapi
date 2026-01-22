@@ -10,7 +10,7 @@
 #'                  is needed. Valid data types include 'cases', 'virus',
 #'                  'population', 'env', 'geo', 'geo_synonym', 'im', 'activity',
 #'                  'lab_specimen', 'lab_specimen_virus', 'lab_env',
-#'                  'sub_activ', and lqas'.
+#'                  'sub_activ', and 'lqas'.
 #'
 #' @return A list with two elements: 'endpoint_suffix', which is the suffix for
 #'         the API endpoint corresponding to the data type, and 'date_field',

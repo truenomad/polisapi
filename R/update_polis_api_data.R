@@ -121,7 +121,7 @@ update_polis_api_data <- function(min_date,
 
     n_rows <- format(sum(nrow(full_data)), big.mark = ",")
 
-    if (!is.null(file_path) && file.exists(data_file_name) & session_end_date > min_date) {
+    if (!is.null(file_path) && file.exists(data_file_name) && session_end_date > min_date) {
       n_rows <- format(sum(nrow(full_data)), big.mark = ",")
 
       cli::cli_alert_success(glue::glue(

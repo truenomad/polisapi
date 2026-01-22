@@ -27,3 +27,4 @@ potential request errors.
 status_code <- get_status_code("countries")
 }
 }
+\keyword{internal}

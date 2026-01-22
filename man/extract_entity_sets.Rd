@@ -33,3 +33,4 @@ url <- paste0(polis_api_root_url, api_token)
 xml_df <- extract_entity_sets(url)
 }
 }
+\keyword{internal}

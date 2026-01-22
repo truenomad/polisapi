@@ -1,22 +1,24 @@
 Package: polisapi
-Title: POLIS data downloader
-Version: 1.0.0
-Authors@R: 
-  c(person(given = "Mohamed A.", 
-           family = "Yusuf",
-           role = c("aut", "cre"),
-           email = "moyusuf@who.int",
-           comment = c(
-           second_email = "mohamedayusuf87@gmail.com",
-           ORCID = "0000-0002-9339-4613")))
-Author: Mohamed A. Yusuf [aut, cre]
-Maintainer: Mohamed A. Yusuf <moyusuf@who.int>
-Description: This R package makes it easy to download Polio data from the WHO 
-            POLIS database.
+Title: Download and Manage Data from the WHO POLIS Database
+Version: 1.1.0
+Authors@R:
+  person(given = "Mohamed A.",
+         family = "Yusuf",
+         role = c("aut", "cre"),
+         email = "moyusuf@who.int",
+         comment = c(ORCID = "0000-0002-9339-4613"))
+Description: Provides tools for downloading, updating, and managing polio
+    surveillance data from the World Health Organization's Polio Information
+    System (POLIS) database. Supports sequential and parallel data retrieval,
+    incremental updates, regional filtering, and multiple output formats.
+    Includes access to case data, laboratory specimens, environmental
+    surveillance, vaccination campaigns, and geographic references.
 License: MIT + file LICENSE
+URL: https://github.com/truenomad/polisapi
+BugReports: https://github.com/truenomad/polisapi/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Depends: R (>= 4.1.0)
 Imports:
     cli,
@@ -26,7 +28,7 @@ Imports:
     httr2,
     stringr,
     tidyselect
-Suggests: 
+Suggests:
     epiCleanr,
     here,
     httr,
