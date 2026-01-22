@@ -16,7 +16,6 @@ Sys.setenv(POLIS_API_KEY = "your_api_key_here")
 
 # Download case data
 cases <- get_polis_api_data(
-
   min_date = "2024-01-01",
   max_date = Sys.Date(),
   data_type = "cases",
