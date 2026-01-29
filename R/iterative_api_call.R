@@ -45,7 +45,7 @@ iterative_api_call <- function(url, token = NULL, max_attempts = 3, show_progres
   httr2::req_perform_iterative(
     req,
     next_req = \(req, resp) {
-      next_link <- httr2::resp_body_json(resp)$odata.nextLink
+      next_link <- httr2::resp_body_json(resp)[["@odata.nextLink"]]
       if (is.null(next_link)) {
         return(NULL)
       }
